@@ -10,6 +10,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 contract ReflectionToken is IReflectionToken, Ownable {
+    // Review: 
+    // - TODO: Should comment that fee is the numerator in case the denominator is maxFee.
+    // - TODO: can you separate the Fee struct to another contract having itnernal methods?
     struct FeeTier {
         uint256 ecoSystemFee;
         uint256 liquidityFee;
@@ -20,12 +23,17 @@ contract ReflectionToken is IReflectionToken, Ownable {
         address owner;
     }
 
+    // Review: 
+    // - Prefix r represents ReflectionReward?
+    // - TODO: the struct name should be FeeAmounts, to clarify the variables are amount, not fee numerator.
+    // - TODO: Shoud comment that FeeValues is the amount of token which is calculated by given tierAmount.
     struct FeeValues {
         uint256 rAmount;
         uint256 rTransferAmount;
         uint256 rFee;
+        // TODO: transferAmount? Do you mean amountTransferred?
         uint256 tTransferAmount;
-        //TODO: did you mean tEcoSystem?
+        // TODO: did you mean tEcoSystem?
         uint256 tEchoSystem;
         uint256 tLiquidity;
         uint256 tFee;
@@ -34,9 +42,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     }
 
     // Review: 
-    // - what does mean by "t" and "r" prefix?
-    // t is token?
-    // r is reflection?
+    // - TODO: Shoud mention the prefix "t" represents Tier.
     struct tFeeValues {
         uint256 tTransferAmount;
         //TODO: did you mean tEcoSystem?
@@ -59,6 +65,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     uint256 private _tTotal;
     uint256 private _rTotal;
     uint256 private _tFeeTotal;
+    // TODO: should mention that maxFee is the denominator of fee ratio.
     uint256 public maxFee;
 
     string private _name = "ReflectionToken";
@@ -141,6 +148,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     event SwapAndEvolveEnabledUpdated(bool enabled);
     event SwapAndEvolve(uint256 ethSwapped, uint256 tokenReceived, uint256 ethIntoLiquidity);
 
+    // Review: Doing
     constructor(address _router, string memory __name, string memory __symbol) {
         _name = __name;
         _symbol = __symbol;
@@ -148,13 +156,14 @@ contract ReflectionToken is IReflectionToken, Ownable {
 
         // TODO: Why the amount of total supply is not configurable?
         uint tTotal = 1000000 * 10**6 * 10**9;
-        // TODO: token for reflection?
+        // TODO: What does rTotal mean? total amount od token for reflection?
+        // TODO: What is this fomula? The potentail amount to be able to issue additionally?
         uint rTotal = (MAX - (MAX % tTotal));// MAX = ~uint256(0)
 
         _tTotal = tTotal;
         _rTotal = rTotal;
 
-        // TODO: fee what? fee ratio?
+        // TODO: Shoud mention fee denominator
         maxFee = 1000;
 
         maxTxAmount = 5000 * 10**6 * 10**9;
@@ -162,6 +171,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         burnAddress = 0x000000000000000000000000000000000000dEaD;
 
         address ownerAddress = owner();
+        // All potential reflection amount will be given to the token owner.
         _rOwned[ownerAddress] = rTotal;
 
         uniswapV2Router = IUniswapV2Router02(_router);
@@ -171,12 +181,14 @@ contract ReflectionToken is IReflectionToken, Ownable {
 
         // exclude owner and this contract from fee
         // Review: 
-        // - TODO: what is the "amount" excluded from?
+        // - TODO: "from fee" mean addressListToImposePayingFee?
         _isExcludedFromFee[ownerAddress] = true;
         _isExcludedFromFee[address(this)] = true;
 
-
         // init _feeTiers
+
+        // Review:
+        // - TODO: What are you doing below? Initial configuratio? How?
 
         // liquidityFee, taxFee
         defaultFees = _addTier(0, 500, 500, 0, 0, address(0), address(0));
@@ -292,6 +304,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
     function _excludeFromReward(address account) private {
         if (_rOwned[account] > 0) {
             _tOwned[account] = tokenFromReflection(_rOwned[account]);
+            // TODO: better to modify the coding style simply
+            // _tTotalExcluded += _tOwned[account];
+            // _rTotalExcluded +=  _rOwned[account];
             _tTotalExcluded = _tTotalExcluded + _tOwned[account];
             _rTotalExcluded = _rTotalExcluded + _rOwned[account];
         }
@@ -303,6 +318,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
     // or when increase, decrease exclude value
     function includeInReward(address account) external onlyOwner {
         require(_isExcluded[account], "Account is already included");
+        // TODO: better to modify the coding style simply
+        // _tTotalExcluded -= _tOwned[account];
+        // _rTotalExcluded -=  _rOwned[account];
         _tTotalExcluded = _tTotalExcluded - _tOwned[account];
         _rTotalExcluded = _rTotalExcluded - _rOwned[account];
         _tOwned[account] = 0;
@@ -346,7 +364,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     // -TODO: add conventional comment
     // functions for setting fees
     /**
-     * Setter functions for fee
+     * Setter functions for fee configurations
      */
 
     function setEcoSystemFeePercent(uint256 _tierIndex, uint256 _ecoSystemFee)
@@ -424,6 +442,18 @@ contract ReflectionToken is IReflectionToken, Ownable {
         }
     }
 
+    // Review:
+    // - TODO: Should add comments to explain each arguments in the following style.
+    /**
+     * @dev addTier is used for configuration of fee Tier.
+     * _ecoSystemFee: 
+     * _liquidityFee: 
+     * _taxFee:
+     * _ownerFee:
+     * _burnFee:
+     * _ecoSystem:
+     * _owner: 
+     */
     function addTier(
         uint256 _ecoSystemFee,
         uint256 _liquidityFee,
@@ -437,7 +467,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     }
 
     // Review:
-    // -TODO: add conventional comment
+    // - TODO: add conventional comment
     // functions related to uniswap
     /**
      * Setter functions related to Uniswap
@@ -491,7 +521,11 @@ contract ReflectionToken is IReflectionToken, Ownable {
         emit SwapAndEvolve(half, swapeedToken, otherHalf);
     }
 
-    // update some addresses
+    // Review:
+    // - TODO: add conventional comment
+    /**
+     * Set functions of addresses and the number of tokens
+     */
     
     function setMigrationAddress(address _migration) public onlyOwner {
         migration = _migration;
@@ -512,7 +546,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
         numOfETHToSwapAndEvolve = _numETH;
     }
 
+    // Review:
+    // - TODO: add conventional comment
     // withdraw functions
+    /**
+     * Withdraw functions
+     */
     
     function withdrawToken(address _token, uint256 _amount) public onlyOwner {
         require(IReflectionToken(_token).transfer(msg.sender, _amount), "transfer is failed");
@@ -523,7 +562,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
         require(sent, "transfer is failed");
     }
 
+    // Review:
+    // - TODO: add conventional comment
     // internal or private
+    /**
+     * Iternal/Private functions
+     */
 
     function _addTier(
         uint256 _ecoSystemFee,
@@ -534,6 +578,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
         address _ecoSystem,
         address _owner
     ) internal returns (FeeTier memory) {
+        // TODO: _checkFees to what? -> make sure the sum of fee values is less than denominator.
+        // TODO: the function name should be _newFeeTier.
         FeeTier memory _newTier = _checkFees(
             FeeTier(_ecoSystemFee, _liquidityFee, _taxFee, _ownerFee, _burnFee, _ecoSystem, _owner)
         );
@@ -541,10 +587,16 @@ contract ReflectionToken is IReflectionToken, Ownable {
         if (!_isExcluded[_owner]) _excludeFromReward(_owner);
         _feeTiers.push(_newTier);
 
+        // TODO: the function name should be _newFeeTier.
         return _newTier;
     }
 
+    // Review: 
+    // the fee is taken on transferring the token.
     function _reflectFee(uint256 rFee, uint256 tFee) private {
+        // TODO: modify the fomula simply
+        // _rTotal -= rFee;
+        // _tFeeTotal += tFee;
         _rTotal = _rTotal - rFee;
         _tFeeTotal = _tFeeTotal + tFee;
     }
@@ -673,7 +725,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         );
     }
 
-    //this method is responsible for taking all fee, if takeFee is true
+    // this method is responsible for taking all fee, if takeFee is true
     function _tokenTransfer(
         address sender,
         address recipient,
@@ -705,6 +757,11 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tierIndex
     ) private {
         FeeValues memory _values = _getValues(tAmount, tierIndex);
+        // TODO: modify the fomulas simply
+        // _tOwned[sender] -= tAmount;
+        // _rOwned[sender] -= _values.rAmount;
+        // _tOwned[recipient] += _values.tTransferAmount;
+        // _rOwned[recipient] += _values.rTransferAmount;     
         _tOwned[sender] = _tOwned[sender] - tAmount;
         _rOwned[sender] = _rOwned[sender] - _values.rAmount;
         _tOwned[recipient] = _tOwned[recipient] + _values.tTransferAmount;
@@ -773,6 +830,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
         emit Transfer(sender, recipient, _values.tTransferAmount);
     }
 
+    // Review: 
+    // the fee is taked on transferring the token
     function _takeFees(
         address sender,
         FeeValues memory values,
@@ -784,6 +843,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         _takeBurn(sender, values.tBurn);
     }
 
+    // Review: 
+    // the fee is taken on transferring the token
+    // ----------------
     // we update _rTotalExcluded and _tTotalExcluded when add, remove wallet from excluded list
     // or when increase, decrease exclude value
     function _takeFee(
@@ -796,9 +858,15 @@ contract ReflectionToken is IReflectionToken, Ownable {
 
         uint256 currentRate = _getRate();
         uint256 rAmount = tAmount * currentRate;
+        // TODO: Modify the coding style simply
+        // _rOwned[recipient] += rAmount;
         _rOwned[recipient] = _rOwned[recipient] + rAmount;
 
         if (_isExcluded[recipient]) {
+            // TODO: Modify the coding style simply
+            // _tOwned[recipient] += tAmount;
+            // _tTotalExcluded += tAmount;
+            // _rTotalExcluded += rAmount;
             _tOwned[recipient] = _tOwned[recipient] + tAmount;
             _tTotalExcluded = _tTotalExcluded + tAmount;
             _rTotalExcluded = _rTotalExcluded + rAmount;
@@ -834,11 +902,15 @@ contract ReflectionToken is IReflectionToken, Ownable {
         return _isExcluded[account];
     }
 
+    // Review:
+    // to get the amount of reflection token?
+    // - TODO: why tAmount is necessary to get reflection amount?
     function reflectionFromTokenInTiers(
         uint256 tAmount,
         uint256 _tierIndex,
         bool deductTransferFee
     ) public view returns (uint256) {
+        // _tTotal means totalSupply?
         require(tAmount <= _tTotal, "Amount must be less than supply");
         if (!deductTransferFee) {
             FeeValues memory _values = _getValues(tAmount, _tierIndex);
@@ -902,12 +974,13 @@ contract ReflectionToken is IReflectionToken, Ownable {
     // internal or private
 
     // Review: 
-    // - TODO: what ratio ??
+    // - TODO: what ratio ? reflectinAmount/tierAmmount ? 
     function _getRate() private view returns (uint256) {
         (uint256 rSupply, uint256 tSupply) = _getCurrentSupply();
         return rSupply / tSupply;
     }
 
+    // Review: Idk
     function _getCurrentSupply() private view returns (uint256, uint256) {
         if (_rTotalExcluded > _rTotal || _tTotalExcluded > _tTotal) {
             return (_rTotal, _tTotal);
@@ -917,18 +990,23 @@ contract ReflectionToken is IReflectionToken, Ownable {
 
         if (rSupply < _rTotal / _tTotal) return (_rTotal, _tTotal);
 
+        // case: rSupply >= _rTotal / _tTotal
         return (rSupply, tSupply);
     }
 
-    // Review: 
-    // - TODO: what fee? for what?
+    // Review:
+    // - TODO: the name should be _calculateFeeAmout.
+    // _fee is the numerator of fee ratio.
+    // - TODO: the name of _fee should be _feeNumerator.
     function _calculateFee(uint256 _amount, uint256 _fee) private pure returns (uint256) {
         if (_fee == 0) return 0;
+        // TODO: why no use maxFEE for (10**4)?
         return _amount * _fee / (10**4);
     }
 
     // Review: 
-    // - TODO: what is RValue? vs. TValue?
+    // - TODO: what is RValues? ReflectionValues?
+    // 
     function _getRValues(
         uint256 tAmount,
         uint256 tFee,
@@ -950,6 +1028,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
         return (rAmount, rTransferAmount, rFee);
     }
 
+    // Review:
+    // - TODO: what is TValue? TierValue?
     function _getValues(uint256 tAmount, uint256 _tierIndex) private view returns (FeeValues memory) {
         tFeeValues memory tValues = _getTValues(tAmount, _tierIndex);
         uint256 tTransferFee = tValues.tLiquidity + tValues.tEchoSystem + tValues.tOwner + tValues.tBurn;
@@ -974,7 +1054,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     }
 
     // Review: 
-    // - TODO: hwat is TValue? (what does mean by prefix t?) tier?
+    // - TODO: what is TValue? (what does mean by prefix t?) tier?
     function _getTValues(uint256 tAmount, uint256 _tierIndex) private view returns (tFeeValues memory) {
         FeeTier memory tier = _feeTiers[_tierIndex];
         tFeeValues memory tValues = tFeeValues(
@@ -991,6 +1071,10 @@ contract ReflectionToken is IReflectionToken, Ownable {
         return tValues;
     }
 
+    // Review: 
+    // - Usage: used in addTier()
+    // - TODO: Should mention what you're checking.
+    // - TODO: Shoud mention that maxFee is the denominator of fee ratio. 1000.
     function _checkFees(FeeTier memory _tier) internal view returns (FeeTier memory) {
         uint256 _fees = _tier.ecoSystemFee + _tier.liquidityFee + _tier.taxFee + _tier.ownerFee + _tier.burnFee;
         require(_fees <= maxFee, "ReflectionToken: Fees exceeded max limitation");
