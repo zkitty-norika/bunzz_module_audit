@@ -27,11 +27,27 @@ contract ReflectionToken is IReflectionToken, Ownable {
     // - Prefix r represents ReflectionReward?
     // - TODO: the struct name should be FeeAmounts, to clarify the variables are amount, not fee numerator.
     // - TODO: Shoud comment that FeeValues is the amount of token which is calculated by given tierAmount.
+
+    // - TODO: add explaration for each variables
+    /**
+     * @dev
+     * rAmount: reflectableAmount, tAmount * currentRate
+     * rTransferAmount: rAmount - rFee - rTransferFee
+     * rFee: tFee * currentRate
+     * tTransferAmount: tTransferFee * currentRate
+     * tEchoSystem:
+     * tLiquidity:
+     * tFee:
+     * tOwner:
+     * tBurn:
+     */
     struct FeeValues {
+        // rAmount
         uint256 rAmount;
         uint256 rTransferAmount;
         uint256 rFee;
         // TODO: transferAmount? Do you mean amountTransferred?
+        // TODO: => The name of tTransferAmount shoud be tTransfableAmount.
         uint256 tTransferAmount;
         // TODO: did you mean tEcoSystem?
         uint256 tEchoSystem;
@@ -361,7 +377,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     }
 
     // Review:
-    // -TODO: add conventional comment
+    // -　TODO: add conventional comment
     // functions for setting fees
     /**
      * Setter functions for fee configurations
@@ -775,6 +791,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
         emit Transfer(sender, recipient, _values.tTransferAmount);
     }
 
+    // Review:
+    // tAmount is the amount transferred.
     function _transferStandard(
         address sender,
         address recipient,
@@ -782,6 +800,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tierIndex
     ) private {
         FeeValues memory _values = _getValues(tAmount, tierIndex);
+        // TODO: modify the fomulas simply
+        // _rOwned[sender] -= _values.rAmount;
+        // _rOwned[recipient] += _values.rTransferAmount;
         _rOwned[sender] = _rOwned[sender] - _values.rAmount;
         _rOwned[recipient] = _rOwned[recipient] + _values.rTransferAmount;
         _takeFees(sender, _values, tierIndex);
@@ -857,6 +878,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         if (tAmount == 0) return;
 
         uint256 currentRate = _getRate();
+        // TODO: currentRate is rSupply / tSupply.
         uint256 rAmount = tAmount * currentRate;
         // TODO: Modify the coding style simply
         // _rOwned[recipient] += rAmount;
@@ -872,6 +894,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
             _rTotalExcluded = _rTotalExcluded + rAmount;
         }
 
+        // TODO(Critical): token is not transferred from the sender.
+        // TODO(Critical): the amount of token is not tAmount.
         emit Transfer(sender, recipient, tAmount);
     }
 
@@ -880,8 +904,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
     function _takeBurn(address sender, uint256 _amount) private {
         if (_amount == 0) return;
         address _burnAddress = burnAddress;
+        // TODO: Modify the coding style simply
+        // _tOwned[_burnAddress] += _amount;
         _tOwned[_burnAddress] = _tOwned[_burnAddress] + _amount;
         if (_isExcluded[_burnAddress]) {
+            // TODO: Modify the coding style simply
+            // _tTotalExcluded += _amount;
             _tTotalExcluded = _tTotalExcluded + _amount;
         }
 
@@ -974,13 +1002,15 @@ contract ReflectionToken is IReflectionToken, Ownable {
     // internal or private
 
     // Review: 
+    // Usage: rAmount = tAmount * _getRate();
     // - TODO: what ratio ? reflectinAmount/tierAmmount ? 
     function _getRate() private view returns (uint256) {
         (uint256 rSupply, uint256 tSupply) = _getCurrentSupply();
         return rSupply / tSupply;
     }
 
-    // Review: Idk
+    // Review: Idk!
+    // - TODO: unclear naming. What supply? token supply? but return value is ratio.
     function _getCurrentSupply() private view returns (uint256, uint256) {
         if (_rTotalExcluded > _rTotal || _tTotalExcluded > _tTotal) {
             return (_rTotal, _tTotal);
@@ -1029,9 +1059,11 @@ contract ReflectionToken is IReflectionToken, Ownable {
     }
 
     // Review:
-    // - TODO: what is TValue? TierValue?
+    // - tAmount: amountTransferred at transfer() function.
+    // 
     function _getValues(uint256 tAmount, uint256 _tierIndex) private view returns (FeeValues memory) {
         tFeeValues memory tValues = _getTValues(tAmount, _tierIndex);
+        // TODO: what is diff btw tTransferFee and tValues.tFee?
         uint256 tTransferFee = tValues.tLiquidity + tValues.tEchoSystem + tValues.tOwner + tValues.tBurn;
         (uint256 rAmount, uint256 rTransferAmount, uint256 rFee) = _getRValues(
             tAmount,
@@ -1066,6 +1098,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
             _calculateFee(tAmount, tier.burnFee)
         );
 
+        // TODO: the name of tTransferAmount shoud be tTransfableAmount.
         tValues.tTransferAmount = tAmount - tValues.tEchoSystem - tValues.tFee - tValues.tLiquidity - tValues.tOwner - tValues.tBurn;
 
         return tValues;
