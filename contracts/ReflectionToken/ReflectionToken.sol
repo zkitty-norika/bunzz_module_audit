@@ -25,6 +25,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 rTransferAmount;
         uint256 rFee;
         uint256 tTransferAmount;
+        //TODO: did you mean tEcoSystem?
         uint256 tEchoSystem;
         uint256 tLiquidity;
         uint256 tFee;
@@ -32,11 +33,13 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tBurn;
     }
 
-    // Review: what does mean by "t" and "r" prefix?
+    // Review: 
+    // - what does mean by "t" and "r" prefix?
     // t is token?
     // r is reflection?
     struct tFeeValues {
         uint256 tTransferAmount;
+        //TODO: did you mean tEcoSystem?
         uint256 tEchoSystem;
         uint256 tLiquidity;
         uint256 tFee;
@@ -76,8 +79,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
     uint256 public numTokensToCollectETH;
     uint256 public numOfETHToSwapAndEvolve;
 
+    // Review: 
+    // - TODO: what is maxTxAmount used for?
     uint256 public maxTxAmount;
 
+    // Review: 
+    // - TODO: what is maxTxAmount used for?
     uint256 private _rTotalExcluded;
     uint256 private _tTotalExcluded;
 
@@ -139,15 +146,15 @@ contract ReflectionToken is IReflectionToken, Ownable {
         _symbol = __symbol;
         _decimals = 9;
 
-        // Review: Why the token amount to issue is not configurable?
+        // TODO: Why the amount of total supply is not configurable?
         uint tTotal = 1000000 * 10**6 * 10**9;
-        // Review: token for reflection?
+        // TODO: token for reflection?
         uint rTotal = (MAX - (MAX % tTotal));// MAX = ~uint256(0)
 
         _tTotal = tTotal;
         _rTotal = rTotal;
 
-        // Review: fee what? fee ratio?
+        // TODO: fee what? fee ratio?
         maxFee = 1000;
 
         maxTxAmount = 5000 * 10**6 * 10**9;
@@ -163,7 +170,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), WETH);
 
         // exclude owner and this contract from fee
-        // Review: what is the name meaning?
+        // Review: 
+        // - TODO: what is the "amount" excluded from?
         _isExcludedFromFee[ownerAddress] = true;
         _isExcludedFromFee[address(this)] = true;
 
@@ -182,7 +190,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
         emit Transfer(address(0), msg.sender, tTotal);
     }
 
+    // Review:
+    // - TODO: Better to have the convention style
     // IERC20 functions
+    /**
+     * IERC20 functions
+     */
 
     function name() public view returns (string memory) {
         return _name;
@@ -261,8 +274,14 @@ contract ReflectionToken is IReflectionToken, Ownable {
         _migrate(account, amount);
     }
 
-    // onlyOwner
+    // Review:
+    // - TODO: Better to have the convention style
+    /**
+     * onlyOwner configuration functions
+     */
 
+    // Review: 
+    // - TODO: exclude from what?
     // we update _rTotalExcluded and _tTotalExcluded when add, remove wallet from excluded list
     // or when increase, decrease exclude value
     function excludeFromReward(address account) external onlyOwner {
@@ -323,7 +342,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
         _isBlacklisted[account] = false;
     }
 
+    // Review:
+    // -TODO: add conventional comment
     // functions for setting fees
+    /**
+     * Setter functions for fee
+     */
 
     function setEcoSystemFeePercent(uint256 _tierIndex, uint256 _ecoSystemFee)
     external
@@ -412,7 +436,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
         _addTier(_ecoSystemFee, _liquidityFee, _taxFee, _ownerFee, _burnFee, _ecoSystem, _owner);
     }
 
+    // Review:
+    // -TODO: add conventional comment
     // functions related to uniswap
+    /**
+     * Setter functions related to Uniswap
+     */
 
     function setMaxTxPercent(uint256 maxTxPercent) external onlyOwner {
         maxTxAmount = _tTotal * maxTxPercent / (10**4);
@@ -872,6 +901,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
 
     // internal or private
 
+    // Review: 
+    // - TODO: what ratio ??
     function _getRate() private view returns (uint256) {
         (uint256 rSupply, uint256 tSupply) = _getCurrentSupply();
         return rSupply / tSupply;
@@ -889,11 +920,15 @@ contract ReflectionToken is IReflectionToken, Ownable {
         return (rSupply, tSupply);
     }
 
+    // Review: 
+    // - TODO: what fee? for what?
     function _calculateFee(uint256 _amount, uint256 _fee) private pure returns (uint256) {
         if (_fee == 0) return 0;
         return _amount * _fee / (10**4);
     }
 
+    // Review: 
+    // - TODO: what is RValue? vs. TValue?
     function _getRValues(
         uint256 tAmount,
         uint256 tFee,
@@ -938,6 +973,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
         );
     }
 
+    // Review: 
+    // - TODO: hwat is TValue? (what does mean by prefix t?) tier?
     function _getTValues(uint256 tAmount, uint256 _tierIndex) private view returns (tFeeValues memory) {
         FeeTier memory tier = _feeTiers[_tierIndex];
         tFeeValues memory tValues = tFeeValues(
