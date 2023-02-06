@@ -32,8 +32,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tBurn;
     }
 
-    //Review: what does mean by "t" and "r" prefix?
-    // 
+    // Review: what does mean by "t" and "r" prefix?
+    // t is token?
+    // r is reflection?
     struct tFeeValues {
         uint256 tTransferAmount;
         uint256 tEchoSystem;
@@ -138,12 +139,15 @@ contract ReflectionToken is IReflectionToken, Ownable {
         _symbol = __symbol;
         _decimals = 9;
 
+        // Review: Why the token amount to issue is not configurable?
         uint tTotal = 1000000 * 10**6 * 10**9;
-        uint rTotal = (MAX - (MAX % tTotal));
+        // Review: token for reflection?
+        uint rTotal = (MAX - (MAX % tTotal));// MAX = ~uint256(0)
 
         _tTotal = tTotal;
         _rTotal = rTotal;
 
+        // Review: fee what? fee ratio?
         maxFee = 1000;
 
         maxTxAmount = 5000 * 10**6 * 10**9;
@@ -158,7 +162,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
         // Create a uniswap pair for this new token
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), WETH);
 
-        //exclude owner and this contract from fee
+        // exclude owner and this contract from fee
+        // Review: what is the name meaning?
         _isExcludedFromFee[ownerAddress] = true;
         _isExcludedFromFee[address(this)] = true;
 

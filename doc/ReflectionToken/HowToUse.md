@@ -6,8 +6,8 @@
 
 - [ ] Explain each important terminologies.
     - who is “users”? Did you mean “token holder”?
-    - what is fee tiers?
-    - 
+    - what is fee tiers? 
+- [ ] Should mention creating the Uniswap pool of the pair WETH<> deployed token is created at deployment process.
 
 ----
 # Original Text
