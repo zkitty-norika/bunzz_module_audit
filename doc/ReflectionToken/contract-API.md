@@ -1,13 +1,11 @@
 # Contract API
 
-The documentation which is generated from inline comments on solidity contract.
-
-- Methodology:
-  - add NatSpec comments
-  - solidity-docgen npm module
-s
-
 ## ReflectionToken
+
+ERC20 token which has reflection system internally.  
+The main concept of reflection system is proposed.  
+Great articles are following:  
+- [Mechanism from hackernoon](https://hackernoon.com/reflection-mechanism-and-crypto-a-deep-dive)
 
 ### FeeTier
 
@@ -178,6 +176,16 @@ event SwapAndEvolve(uint256 ethSwapped, uint256 tokenReceived, uint256 ethIntoLi
 constructor(address _router, string __name, string __symbol) public
 ```
 
+This is one line dev tag.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _router | address | Uniswap V2 router address |
+| __name | string | the name of token |
+| __symbol | string | the symbol of token |
+
 ### name
 
 ```solidity
@@ -204,7 +212,7 @@ function decimals() public view returns (uint8)
 function totalSupply() public view returns (uint256)
 ```
 
-_Returns the amount of tokens in existence._
+Returns the amount of tokens in existence.
 
 ### balanceOf
 
@@ -212,7 +220,7 @@ _Returns the amount of tokens in existence._
 function balanceOf(address account) public view returns (uint256)
 ```
 
-_Returns the amount of tokens owned by `account`._
+Returns the amount of tokens owned by `account`.
 
 ### transfer
 
@@ -220,11 +228,11 @@ _Returns the amount of tokens owned by `account`._
 function transfer(address recipient, uint256 amount) public returns (bool)
 ```
 
-_Moves `amount` tokens from the caller's account to `recipient`.
+Moves `amount` tokens from the caller's account to `recipient`.
 
 Returns a boolean value indicating whether the operation succeeded.
 
-Emits a {Transfer} event._
+Emits a {Transfer} event.
 
 ### allowance
 
@@ -232,11 +240,11 @@ Emits a {Transfer} event._
 function allowance(address owner, address spender) public view returns (uint256)
 ```
 
-_Returns the remaining number of tokens that `spender` will be
+Returns the remaining number of tokens that `spender` will be
 allowed to spend on behalf of `owner` through {transferFrom}. This is
 zero by default.
 
-This value changes when {approve} or {transferFrom} are called._
+This value changes when {approve} or {transferFrom} are called.
 
 ### approve
 
@@ -244,7 +252,7 @@ This value changes when {approve} or {transferFrom} are called._
 function approve(address spender, uint256 amount) public returns (bool)
 ```
 
-_Sets `amount` as the allowance of `spender` over the caller's tokens.
+Sets `amount` as the allowance of `spender` over the caller's tokens.
 
 Returns a boolean value indicating whether the operation succeeded.
 
@@ -255,7 +263,7 @@ condition is to first reduce the spender's allowance to 0 and set the
 desired value afterwards:
 https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
 
-Emits an {Approval} event._
+Emits an {Approval} event.
 
 ### transferFrom
 
@@ -263,13 +271,13 @@ Emits an {Approval} event._
 function transferFrom(address sender, address recipient, uint256 amount) public returns (bool)
 ```
 
-_Moves `amount` tokens from `sender` to `recipient` using the
+Moves `amount` tokens from `sender` to `recipient` using the
 allowance mechanism. `amount` is then deducted from the caller's
 allowance.
 
 Returns a boolean value indicating whether the operation succeeded.
 
-Emits a {Transfer} event._
+Emits a {Transfer} event.
 
 ### increaseAllowance
 
@@ -289,14 +297,7 @@ function decreaseAllowance(address spender, uint256 subtractedValue) public virt
 function migrate(address account, uint256 amount) external
 ```
 
-_Creates `amount` tokens and assigns them to `account`, increasing
-the total supply.
-
-Emits a {Transfer} event with `from` set to the zero address.
-
-Requirements:
-
-- `account` cannot be the zero address._
+Reflection functions
 
 ### excludeFromReward
 
@@ -398,14 +399,19 @@ function setOwnerFeeAddress(uint256 _tierIndex, address _owner) external
 function addTier(uint256 _ecoSystemFee, uint256 _liquidityFee, uint256 _taxFee, uint256 _ownerFee, uint256 _burnFee, address _ecoSystem, address _owner) public
 ```
 
-_addTier is used for configuration of fee Tier.
-_ecoSystemFee: 
-_liquidityFee: 
-_taxFee:
-_ownerFee:
-_burnFee:
-_ecoSystem:
-_owner:_
+addTier is used for configuration of fee Tier.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _ecoSystemFee | uint256 | TBD |
+| _liquidityFee | uint256 | TBD |
+| _taxFee | uint256 | TBD |
+| _ownerFee | uint256 | TBD |
+| _burnFee | uint256 | TBD |
+| _ecoSystem | address | TBD |
+| _owner | address | TBD |
 
 ### setMaxTxPercent
 
@@ -589,7 +595,6 @@ function _checkFeesChanged(struct ReflectionToken.FeeTier _tier, uint256 _oldFee
 receive() external payable
 ```
 
-<!--
 ## IReflectionToken
 
 ### totalSupply
@@ -598,7 +603,7 @@ receive() external payable
 function totalSupply() external view returns (uint256)
 ```
 
-_Returns the amount of tokens in existence._
+Returns the amount of tokens in existence.
 
 ### balanceOf
 
@@ -606,7 +611,7 @@ _Returns the amount of tokens in existence._
 function balanceOf(address account) external view returns (uint256)
 ```
 
-_Returns the amount of tokens owned by `account`._
+Returns the amount of tokens owned by `account`.
 
 ### transfer
 
@@ -614,11 +619,11 @@ _Returns the amount of tokens owned by `account`._
 function transfer(address recipient, uint256 amount) external returns (bool)
 ```
 
-_Moves `amount` tokens from the caller's account to `recipient`.
+Moves `amount` tokens from the caller's account to `recipient`.
 
 Returns a boolean value indicating whether the operation succeeded.
 
-Emits a {Transfer} event._
+Emits a {Transfer} event.
 
 ### allowance
 
@@ -626,11 +631,11 @@ Emits a {Transfer} event._
 function allowance(address owner, address spender) external view returns (uint256)
 ```
 
-_Returns the remaining number of tokens that `spender` will be
+Returns the remaining number of tokens that `spender` will be
 allowed to spend on behalf of `owner` through {transferFrom}. This is
 zero by default.
 
-This value changes when {approve} or {transferFrom} are called._
+This value changes when {approve} or {transferFrom} are called.
 
 ### approve
 
@@ -638,7 +643,7 @@ This value changes when {approve} or {transferFrom} are called._
 function approve(address spender, uint256 amount) external returns (bool)
 ```
 
-_Sets `amount` as the allowance of `spender` over the caller's tokens.
+Sets `amount` as the allowance of `spender` over the caller's tokens.
 
 Returns a boolean value indicating whether the operation succeeded.
 
@@ -649,7 +654,7 @@ condition is to first reduce the spender's allowance to 0 and set the
 desired value afterwards:
 https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
 
-Emits an {Approval} event._
+Emits an {Approval} event.
 
 ### transferFrom
 
@@ -657,13 +662,13 @@ Emits an {Approval} event._
 function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)
 ```
 
-_Moves `amount` tokens from `sender` to `recipient` using the
+Moves `amount` tokens from `sender` to `recipient` using the
 allowance mechanism. `amount` is then deducted from the caller's
 allowance.
 
 Returns a boolean value indicating whether the operation succeeded.
 
-Emits a {Transfer} event._
+Emits a {Transfer} event.
 
 ### migrate
 
@@ -671,14 +676,14 @@ Emits a {Transfer} event._
 function migrate(address account, uint256 amount) external
 ```
 
-_Creates `amount` tokens and assigns them to `account`, increasing
+Creates `amount` tokens and assigns them to `account`, increasing
 the total supply.
 
 Emits a {Transfer} event with `from` set to the zero address.
 
 Requirements:
 
-- `account` cannot be the zero address._
+- `account` cannot be the zero address.
 
 ### isMigrationStarted
 
@@ -692,10 +697,10 @@ function isMigrationStarted() external view returns (bool)
 event Transfer(address from, address to, uint256 value)
 ```
 
-_Emitted when `value` tokens are moved from one account (`from`) to
+Emitted when `value` tokens are moved from one account (`from`) to
 another (`to`).
 
-Note that `value` may be zero._
+Note that `value` may be zero.
 
 ### Approval
 
@@ -703,8 +708,8 @@ Note that `value` may be zero._
 event Approval(address owner, address spender, uint256 value)
 ```
 
-_Emitted when the allowance of a `spender` for an `owner` is set by
-a call to {approve}. `value` is the new allowance._
+Emitted when the allowance of a `spender` for an `owner` is set by
+a call to {approve}. `value` is the new allowance.
 
 ## IUniswapV2Factory
 
@@ -1109,4 +1114,4 @@ function swapExactETHForTokensSupportingFeeOnTransferTokens(uint256 amountOutMin
 ```solidity
 function swapExactTokensForETHSupportingFeeOnTransferTokens(uint256 amountIn, uint256 amountOutMin, address[] path, address to, uint256 deadline) external
 ```
--->
+

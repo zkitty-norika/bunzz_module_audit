@@ -9,6 +9,13 @@ import "./interface/IUniswapV2Router02.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
+/**
+ * @title ReflectionToken
+ * @dev ERC20 token which has reflection system internally.  
+ * The main concept of reflection system is proposed.  
+ * Great articles are following:  
+ * - [Mechanism from hackernoon](https://hackernoon.com/reflection-mechanism-and-crypto-a-deep-dive)
+ */
 contract ReflectionToken is IReflectionToken, Ownable {
     // Review: 
     // - TODO: Should comment that fee is the numerator in case the denominator is maxFee.
@@ -27,20 +34,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
     // - Prefix r represents ReflectionReward?
     // - TODO: the struct name should be FeeAmounts, to clarify the variables are amount, not fee numerator.
     // - TODO: Shoud comment that FeeValues is the amount of token which is calculated by given tierAmount.
-
     // - TODO: add explaration for each variables
-    /**
-     * @dev
-     * rAmount: reflectableAmount, tAmount * currentRate
-     * rTransferAmount: rAmount - rFee - rTransferFee
-     * rFee: tFee * currentRate
-     * tTransferAmount: tTransferFee * currentRate
-     * tEchoSystem:
-     * tLiquidity:
-     * tFee:
-     * tOwner:
-     * tBurn:
-     */
+
     struct FeeValues {
         // rAmount
         uint256 rAmount;
@@ -165,6 +160,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
     event SwapAndEvolve(uint256 ethSwapped, uint256 tokenReceived, uint256 ethIntoLiquidity);
 
     // Review: Doing
+    /**
+     * @dev This is one line dev tag.
+     * @param _router Uniswap V2 router address
+     * @param __name the name of token
+     * @param __symbol the symbol of token
+     */
     constructor(address _router, string memory __name, string memory __symbol) {
         _name = __name;
         _symbol = __symbol;
@@ -290,7 +291,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         return true;
     }
 
-    // Reflection functions
+    /**
+     * Reflection functions
+     */
 
     function migrate(address account, uint256 amount)
     external
@@ -462,13 +465,13 @@ contract ReflectionToken is IReflectionToken, Ownable {
     // - TODO: Should add comments to explain each arguments in the following style.
     /**
      * @dev addTier is used for configuration of fee Tier.
-     * _ecoSystemFee: 
-     * _liquidityFee: 
-     * _taxFee:
-     * _ownerFee:
-     * _burnFee:
-     * _ecoSystem:
-     * _owner: 
+     * @param _ecoSystemFee TBD
+     * @param _liquidityFee TBD
+     * @param _taxFee TBD
+     * @param _ownerFee TBD
+     * @param _burnFee TBD
+     * @param _ecoSystem TBD
+     * @param _owner TBD
      */
     function addTier(
         uint256 _ecoSystemFee,
