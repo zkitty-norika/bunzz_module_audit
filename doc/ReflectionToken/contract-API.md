@@ -711,6 +711,7 @@ event Approval(address owner, address spender, uint256 value)
 Emitted when the allowance of a `spender` for an `owner` is set by
 a call to {approve}. `value` is the new allowance.
 
+<!--
 ## IUniswapV2Factory
 
 ### PairCreated
@@ -1115,3 +1116,4 @@ function swapExactETHForTokensSupportingFeeOnTransferTokens(uint256 amountOutMin
 function swapExactTokensForETHSupportingFeeOnTransferTokens(uint256 amountIn, uint256 amountOutMin, address[] path, address to, uint256 deadline) external
 ```
 
+-->
