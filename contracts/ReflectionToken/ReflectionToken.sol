@@ -64,6 +64,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tBurn;
     }
 
+    /**
+     * Balance of all token hodlers
+     */
     mapping(address => uint256) private _rOwned;
     mapping(address => uint256) private _tOwned;
     mapping(address => mapping(address => uint256)) private _allowances;
@@ -95,6 +98,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     address public burnAddress;
 
     uint256 public numTokensToCollectETH;
+    // TODO(Bad naming): numOfETHToSwapAndEvolve should be amountOfETHToSwapAndEvolve
     uint256 public numOfETHToSwapAndEvolve;
 
     // Review: 
@@ -115,12 +119,14 @@ contract ReflectionToken is IReflectionToken, Ownable {
 
     event MinTokensBeforeSwapUpdated(uint256 minTokensBeforeSwap);
 
+    // Review: ?????
     modifier lockTheSwap() {
         inSwapAndLiquify = true;
         _;
         inSwapAndLiquify = false;
     }
 
+    // Review: ?????
     modifier lockUpgrade() {
         require(!_upgraded, "ReflectionToken: Already upgraded");
         _;
@@ -220,8 +226,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     }
 
     // Review:
-    // - TODO: Better to have the convention style
-    // IERC20 functions
+    // - TODO: Should inherit IERC20
     /**
      * IERC20 functions
      */
@@ -295,6 +300,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
      * Reflection functions
      */
 
+    // TODO: What is migration? What is the use-case?????
     function migrate(address account, uint256 amount)
     external
     override
@@ -511,10 +517,11 @@ contract ReflectionToken is IReflectionToken, Ownable {
         WETH = uniswapV2Router.WETH();
     }
 
+    // Review: Doing
     function swapAndEvolve() public onlyOwner lockTheSwap {
         // split the contract balance into halves
         uint256 contractETHBalance = address(this).balance;
-        require(contractETHBalance >= numOfETHToSwapAndEvolve, "ETH balance is not reach for S&E Threshold");
+        require(contractETHBalance >= numOfETHToSwapAndEvolve, "ETH balance is not reach for SwapAndEvolve Threshold");
 
         contractETHBalance = numOfETHToSwapAndEvolve;
 
@@ -566,12 +573,12 @@ contract ReflectionToken is IReflectionToken, Ownable {
     }
 
     // Review:
-    // - TODO: add conventional comment
-    // withdraw functions
+    // - TODO: who is the amount?
     /**
      * Withdraw functions
      */
     
+    // Reivew: Who wiull trigger withdraw function()??
     function withdrawToken(address _token, uint256 _amount) public onlyOwner {
         require(IReflectionToken(_token).transfer(msg.sender, _amount), "transfer is failed");
     }
@@ -610,8 +617,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         return _newTier;
     }
 
-    // Review: 
-    // the fee is taken on transferring the token.
+    // TODO(Bad Naming): reflectFee from where to where?
     function _reflectFee(uint256 rFee, uint256 tFee) private {
         // TODO: modify the fomula simply
         // _rTotal -= rFee;
@@ -645,6 +651,10 @@ contract ReflectionToken is IReflectionToken, Ownable {
         emit Approval(owner, spender, amount);
     }
 
+    // Review: Main function of this contrscat. Should have a proper description of operation.
+    /**
+     * @dev transfer the Reflection Token deducted from `amount` transferred as the fee.
+     */
     function _transfer(
         address from,
         address to,
@@ -705,6 +715,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         path[1] = uniswapV2Router.WETH();
         _approve(address(this), address(uniswapV2Router), tokenAmount);
         // make the swap
+        // Review: swapExactTokensForETHSupportingFeeOnTransferTokens?
         uniswapV2Router.swapExactTokensForETHSupportingFeeOnTransferTokens(
             tokenAmount,
             0, // accept any amount of ETH
@@ -714,7 +725,10 @@ contract ReflectionToken is IReflectionToken, Ownable {
         );
     }
 
+    // Review(Bad naming): _swapWETHToTokens
     function _swapETHForTokens(uint256 ethAmount) private {
+        // TODO: what is this function doing? geenrate the pair? or conductin the swap?
+
         // generate the uniswap pair path of token -> weth
         address[] memory path = new address[](2);
         path[0] = uniswapV2Router.WETH();
@@ -729,6 +743,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         );
     }
 
+    // Review(Bad naming): f**k
+    // TODO(Ciritical): gasLimit should be maximized to 9999999.
+    // Cf: https://github.com/Uniswap/v2-periphery/blob/dda62473e2da448bc9cb8f4514dadda4aeede5f4/test/UniswapV2Router02.spec.ts#L16-L18
     function _addLiquidity(uint256 tokenAmount, uint256 ethAmount) private {
         // approve token transfer to cover all possible scenarios
         _approve(address(this), address(uniswapV2Router), tokenAmount);
@@ -854,8 +871,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         emit Transfer(sender, recipient, _values.tTransferAmount);
     }
 
-    // Review: 
-    // the fee is taked on transferring the token
+    /**
+     * @dev transfer fee amount of Reflection Tokens to all fee recipients.
+     */
     function _takeFees(
         address sender,
         FeeValues memory values,
@@ -867,9 +885,6 @@ contract ReflectionToken is IReflectionToken, Ownable {
         _takeBurn(sender, values.tBurn);
     }
 
-    // Review: 
-    // the fee is taken on transferring the token
-    // ----------------
     // we update _rTotalExcluded and _tTotalExcluded when add, remove wallet from excluded list
     // or when increase, decrease exclude value
     function _takeFee(
@@ -897,8 +912,6 @@ contract ReflectionToken is IReflectionToken, Ownable {
             _rTotalExcluded = _rTotalExcluded + rAmount;
         }
 
-        // TODO(Critical): token is not transferred from the sender.
-        // TODO(Critical): the amount of token is not tAmount.
         emit Transfer(sender, recipient, tAmount);
     }
 
@@ -1088,8 +1101,6 @@ contract ReflectionToken is IReflectionToken, Ownable {
         );
     }
 
-    // Review: 
-    // - TODO: what is TValue? (what does mean by prefix t?) tier?
     function _getTValues(uint256 tAmount, uint256 _tierIndex) private view returns (tFeeValues memory) {
         FeeTier memory tier = _feeTiers[_tierIndex];
         tFeeValues memory tValues = tFeeValues(
