@@ -86,6 +86,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
     // DONE(bad naming): Should change to _isExcludedFromReward
     mapping(address => bool) private _isExcludedFromReward;
     mapping(address => bool) private _isBlacklisted;
+    // get feeTierIndex by address
     mapping(address => uint256) private _accountsTier;
 
     uint256 private constant MAX = ~uint256(0);
@@ -207,7 +208,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
 
         address ownerAddress = owner();
 
-        // Review: why??????
+        // Review: 
+        // - TODO: why owner(= contract deployer) will own all refection token?
         // All potential reflection amount will be given to the token owner.
         _rBalance[ownerAddress] = rTotal;
 
@@ -216,8 +218,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         // Create a uniswap pair for this new token
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), WETH);
 
-        // Review: 
-        // We won't take a fee from owner and this contract ?
+        // We won't take a fee from owner and this contract.
         _isExcludedFromFee[ownerAddress] = true;
         _isExcludedFromFee[address(this)] = true;
 
@@ -316,7 +317,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
      * Reflection functions
      */
 
-    // TODO: What is migration? What is the use-case?????
+    // TODO: migrate what to whom?
     function migrate(address account, uint256 amount)
     external
     override
@@ -372,6 +373,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         _isExcludedFromFee[account] = false;
     }
 
+    // Review:
+    // - TODO: Owner have to input the all WL addresses by calling this function?
+    // - TODO: shoud consider to take the list of accounts as argument.
     function whitelistAddress(address _account, uint256 _tierIndex)
     public
     onlyOwner
@@ -797,7 +801,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tAmount,
         uint256 tierIndex
     ) private {
-        FeeValues memory _values = _getValues(tAmount, tierIndex);
+        FeeValues memory _values = _getFeeValues(tAmount, tierIndex);
         // TODO(Critical): need the guard to check for subtractions
         // DONE: modify the fomulas simply
         _tBalance[sender] -= tAmount;
@@ -821,9 +825,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tAmount,
         uint256 tierIndex
     ) private {
-        FeeValues memory _values = _getValues(tAmount, tierIndex);
+        FeeValues memory _values = _getFeeValues(tAmount, tierIndex);
         // TODO(Critical): input the balance guard
-        require(_rBalance[sender] > values.rAmount, "sender's rToken amount is incufficient");
+        require(_rBalance[sender] > _values.rAmount, "sender's rToken amount is incufficient");
         _rBalance[sender] -= _values.rAmount;
         _rBalance[recipient] += _values.rTransferAmount;
         _takeFees(sender, _values, tierIndex);
@@ -839,9 +843,9 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tAmount,
         uint256 tierIndex
     ) private {
-        FeeValues memory _values = _getValues(tAmount, tierIndex);
+        FeeValues memory _values = _getFeeValues(tAmount, tierIndex);
         // TODO(Critical): input the balance guard
-        require(_rBalance[sender] > values.rAmount, "sender's rToken amount is incufficient");
+        require(_rBalance[sender] > _values.rAmount, "sender's rToken amount is incufficient");
         _rBalance[sender] -= _values.rAmount;
         _tBalance[recipient] += _values.tTransferAmount;
         _rBalance[recipient] += _values.rTransferAmount;
@@ -862,7 +866,7 @@ contract ReflectionToken is IReflectionToken, Ownable {
         uint256 tAmount,
         uint256 tierIndex
     ) private {
-        FeeValues memory _values = _getValues(tAmount, tierIndex);
+        FeeValues memory _values = _getFeeValues(tAmount, tierIndex);
         // TODO(Critical): input the balance guard
         _tBalance[sender] -= tAmount;
         // TODO(Critical): input the balance guard
@@ -957,10 +961,10 @@ contract ReflectionToken is IReflectionToken, Ownable {
         // _tTotal means totalSupply?
         require(tAmount <= _tTotal, "Amount must be less than supply");
         if (!deductTransferFee) {
-            FeeValues memory _values = _getValues(tAmount, _tierIndex);
+            FeeValues memory _values = _getFeeValues(tAmount, _tierIndex);
             return _values.rAmount;
         } else {
-            FeeValues memory _values = _getValues(tAmount, _tierIndex);
+            FeeValues memory _values = _getFeeValues(tAmount, _tierIndex);
             return _values.rTransferAmount;
         }
     }
@@ -1081,8 +1085,8 @@ contract ReflectionToken is IReflectionToken, Ownable {
 
     // Review:
     // - tAmount: amountTransferred at transfer() function.
-    // 
-    function _getValues(uint256 tAmount, uint256 _tierIndex) private view returns (FeeValues memory) {
+    // DONE(Bad naming): Should change to _getFeeValues
+    function _getFeeValues(uint256 tAmount, uint256 _tierIndex) private view returns (FeeValues memory) {
         tFeeValues memory tValues = _getTValues(tAmount, _tierIndex);
         // TODO: what is diff btw tTransferFee and tValues.tFee?
         uint256 tTransferFee = tValues.tLiquidity + tValues.tEchoSystem + tValues.tOwner + tValues.tBurn;
