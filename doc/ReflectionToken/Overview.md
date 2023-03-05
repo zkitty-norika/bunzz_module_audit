@@ -1,4 +1,10 @@
-# Original text
+## About
+> one line description ← What issue does this module solve?
+
+A ERC20 token module with reflection token features.
+
+## Overview
+
 ## What Are Reflection Tokens?
 
 Reflection tokens are also known as reward tokens, because they pay token holders a portion of collected fees simply for holding them through a static reward system. Their functionality provides investors with a source of passive income.
@@ -14,3 +20,7 @@ Reflection tokens provide investors with another way to earn income, encouraging
 The reflection mechanism gives token holders a percentage of the transaction tax imposed when a native token is traded. Distribution is equitable to all liquidity pool providers, based on their share of the pool. Smart contracts ensure that the reflection process is fully transparent and executed instantly.
 
 Reflection tokens also benefit each program responsible for its native coin. This benefit stems from raising and maintaining funds that can be used to further develop the program, which can use a portion of its transaction tax to fund growth and stability.
+
+## Specification
+
+Norika will summarize [this great technical paper](https://reflect-contract-doc.netlify.app/) in a simple word here.
