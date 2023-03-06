@@ -6,11 +6,11 @@ Once you deploy the smart contract, users can use the token like general ERC20 t
 
 2. Migrate old token.  
 If you are already launched an ERC20 token and you want to upgrade the token to a reflection token, that is possible.
-You just set the old token address as a migrate token address.
+You just set the old token address as a migrate token address calling `migrate`.
 
 3. onlyOwner can conduct feature function calls.
 
-## Additional features
+## Feature functions
 
 ### 1. Fee Tier
 ContractOwner is able to configure the 5 types of fee percent taken from transaction; ecoSystemFee, liquidityFee, txFee, ownerFee, and burnFee.
