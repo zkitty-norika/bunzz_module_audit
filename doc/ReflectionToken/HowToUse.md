@@ -1,18 +1,4 @@
-## Checking list to update:
-
-- [ ] Should mention clearly which is must-have configuration, and nice-to-have configuration.
-
-- [ ] Add must-have instructions
-
-- [ ] Explain each important terminologies.
-    - who is “users”? Did you mean “token holder”?
-    - what is fee tiers? 
-- [ ] Should mention creating the Uniswap pool of the pair WETH<> deployed token is created at deployment process.
-
-----
-# Original Text
-
-### Initial Configurations?
+## Get started(Operation)
 
 1. Deploy smart contract via Bunzz platform.  
 Input UniswapV2Router address, token name and symbol as input params.
@@ -22,11 +8,11 @@ Once you deploy the smart contract, users can use the token like general ERC20 t
 If you are already launched an ERC20 token and you want to upgrade the token to a reflection token, that is possible.
 You just set the old token address as a migrate token address.
 
-3. Other owner features.  
+3. Other onlyOwner features.  
 Contract owner can add and update fee tiers.
 Please refer setEcoSystemFeePercent, setLiquidityFeePercent, setTaxFeePercent, setOwnerFeePercent, setBurnFeePercent, setEcoSystemFeeAddress, setOwnerFeeAddress and addTire functions
 
-### Additional features?
+### Additional features
 
 1. Contract owner can add and remove some users in excludeReward list.
 Please refer excludeFromReward and includeInReward functions.

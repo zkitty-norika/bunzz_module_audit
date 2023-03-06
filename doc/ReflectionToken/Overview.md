@@ -3,7 +3,7 @@
 
 A ERC20 token module including auto-staking feature.
 
-## Overview
+# Overview
 
 ## Goal
 
