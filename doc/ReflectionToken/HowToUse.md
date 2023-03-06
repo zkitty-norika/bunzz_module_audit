@@ -21,14 +21,14 @@ ContractOwner is able to configure the 5 types of fee percent taken from transac
 - ownerFee: for contract owner. (he can set the owner address to get the fee). 
 - burnFee: the fee which is burned on each tx. As default, burn fee is 0.
 
-Please refer setEcoSystemFeePercent, setLiquidityFeePercent, setTaxFeePercent, setOwnerFeePercent, setBurnFeePercent, setEcoSystemFeeAddress, setOwnerFeeAddress and addTire functions
+Please refer `setEcoSystemFeePercent`, `setLiquidityFeePercent`, `setTaxFeePercent`, `setOwnerFeePercent`, `setBurnFeePercent`, `setEcoSystemFeeAddress`, `setOwnerFeeAddress` and `addTire` functions.
 
 ### 2. Non-staking addresses
 
-Contract owner can add and remove some users in excludeReward list.
-Please refer excludeFromReward and includeInReward functions.
+Contract owner can add and remove some users in excludeReward list.  
+Please refer `excludeFromReward` and `includeInReward` functions.  
 
 ### 3. blacklist, whitelist
-Contract owner can add and remove some users in a blacklist using blacklistAddress and unBlacklistAddress functions.  
-Contract owner can add and remove some users in a whitelist using whitelistAddress and excludeWhitelistedAddress functions.  
+Contract owner can add and remove some users in a blacklist using `blacklistAddress` and `unBlacklistAddress` functions.  
+Contract owner can add and remove some users in a whitelist using `whitelistAddress` and `excludeWhitelistedAddress` functions.  
 Please check the functions section to learn more specific functions.
