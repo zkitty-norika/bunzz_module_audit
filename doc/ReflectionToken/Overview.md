@@ -1,26 +1,60 @@
 ## About
 > one line description ← What issue does this module solve?
 
-A ERC20 token module with reflection token features.
+A ERC20 token module including auto-staking feature.
 
 ## Overview
 
-## What Are Reflection Tokens?
+## Goal
 
-Reflection tokens are also known as reward tokens, because they pay token holders a portion of collected fees simply for holding them through a static reward system. Their functionality provides investors with a source of passive income.
+Reflection token has a built-in auto-staking feature, which is so-called DeFi 2.0 token. Users don't need to manually stake tokens into other contracts. Instead, users can safely store their tokens in their wallet while still earning rewards. This functionality provides investors with a source of passive income in a more secure way.
 
-A portion of the transaction fees assessed on cryptocurrency transactions can be passed on to investors holding reflection tokens. The process is completed through a reflection mechanism that uses smart contracts to distribute the tokens to all investors in the liquidity pool. While this may seem like a complicated process, it’s simpler than either mining, staking or yield farming. Thus, crypto reflection tokens make it easier for investors of all skill levels to generate passive income from their holdings.
+## What is Reflection token?
 
-## How Do Reflection Tokens Work?
+Reflection token will distribute fees to holders when a user makes a transaction. On the same time, a deflationary mechanism is built in to the token so that the balance of tokens one holds are worth more.
 
-Cryptocurrency markets are well-known for their volatility, which is often the result of traders trying to achieve gains through buying low and selling high. For example, when whales, or major cryptocurrency investors, buy and sell a large number of crypto coins at one time, values can rise or dip dramatically in a short period of time.
 
-Reflection tokens provide investors with another way to earn income, encouraging investors to hold rather than trade their tokens. This promotes market stability and allows investors to profit, even if they don’t have the time available to constantly monitor the market.
+## Features
+### Fee Tier
+ContractOwner is able to configure the 5 types of fee percent taken from transaction; ecoSystemFee, liquidityFee, txFee, ownerFee, and burnFee.
 
-The reflection mechanism gives token holders a percentage of the transaction tax imposed when a native token is traded. Distribution is equitable to all liquidity pool providers, based on their share of the pool. Smart contracts ensure that the reflection process is fully transparent and executed instantly.
+- ecoSystemFee: ???
+    - Q: When this fee is distributed to Whom?
+- liquidityFee: ???
+    - Q: When fee is distributed to Whom? 
+- txFee: ???
+    - Q: When fee is distributed to Whom? 
+- ownerFee: ???
+    - Q: When fee is distributed to Whom? 
+- burnFee: ???
+    - Q: When fee is distributed to Whom?
+    - Q: Recommendation fee percent?
 
-Reflection tokens also benefit each program responsible for its native coin. This benefit stems from raising and maintaining funds that can be used to further develop the program, which can use a portion of its transaction tax to fund growth and stability.
+### t-space value and r-space value
+`tTotal`, which belongs to t-space, represents tokens in circulation or total supply of a token. On the other hand, `rTotal`, which belongs to r-space, is a "reflected" value of tTotal, means token supply in reserve. values in t-space can easily be converted to r-space form, and vice versa using formula below.
 
-## Specification
+Any t-space value $(t)$ can be converted to r-space value $(r)$ as follows:
+$$ r = {tTotal \over rTotal} \cdot t $$
 
-Norika will summarize [this great technical paper](https://reflect-contract-doc.netlify.app/) in a simple word here.
+
+## Transaction
+<a href="https://www.linkpicture.com/view.php?img=LPic61075f154e16f2017733822"><img src="https://www.linkpicture.com/q/Screen-Shot-2021-08-02-at-11.40.46.png" type="image"></a>
+
+Note:  
+(1) If sender is excluded from staking  
+(2) If recipient is excluded from staking
+
+Glossary:
+- tAmount: token amount that sender pays/transfers including tFee
+- tFee: transfer fee (note: 10% was chosen arbitrarily)
+- tTransferAmount: tokens that will get transferred to recipient
+- tOwned[user]: User’s balance represented in t-space (only used by non-stakers)
+- rOwned[user]: User’s balance represented in r-space
+
+### Define non-stakers
+
+Router contracts, pair contracts, dev wallets are usually excluding from staking in order to fully reward users.
+
+### White Paper
+
+If you want to know the technical details, [This great technical paper](https://reflect-contract-doc.netlify.app/) is a good reference.
