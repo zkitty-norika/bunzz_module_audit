@@ -14,22 +14,7 @@ Reflection token has a built-in auto-staking feature, which is so-called DeFi 2.
 Reflection token will distribute fees to holders when a user makes a transaction. On the same time, a deflationary mechanism is built in to the token so that the balance of tokens one holds are worth more.
 
 
-## Features
-### Fee Tier
-ContractOwner is able to configure the 5 types of fee percent taken from transaction; ecoSystemFee, liquidityFee, txFee, ownerFee, and burnFee.
-
-- ecoSystemFee: ???
-    - Q: When this fee is distributed to Whom?
-- liquidityFee: ???
-    - Q: When fee is distributed to Whom? 
-- txFee: ???
-    - Q: When fee is distributed to Whom? 
-- ownerFee: ???
-    - Q: When fee is distributed to Whom? 
-- burnFee: ???
-    - Q: When fee is distributed to Whom?
-    - Q: Recommendation fee percent?
-
+## The mechanism of Reflection Token
 ### t-space value and r-space value
 `tTotal`, which belongs to t-space, represents tokens in circulation or total supply of a token. On the other hand, `rTotal`, which belongs to r-space, is a "reflected" value of tTotal, means token supply in reserve. values in t-space can easily be converted to r-space form, and vice versa using formula below.
 
