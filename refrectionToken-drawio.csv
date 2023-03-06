@@ -1,0 +1,123 @@
+######################
+## draw.io compatible CSV.
+##    to import, visit draw.io and goto: Arrange -> Insert -> Advanced -> CSV ... 
+##
+##
+## GENERATOR: https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor
+######################
+# label: %label%
+# parentstyle: swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=%fill%;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontFamily=Verdana;fontSize=12;fontColor=#000000;arcSize=20;
+# style: shape=%type%;html=1;fillColor=%fill%;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=10;align=left;%override%
+# namespace: sva-1676363946148
+# width: auto
+# height: auto
+# ignore: id,shape,fill,stroke,refs
+# identity: id
+# parent: rparent
+## padding: 40
+## nodespacing: 40
+## levelspacing: 40
+## edgespacing: 40
+## layout: horizontalflow
+# connect: {"from": "refs", "to": "id", "style": "curved=1;fontSize=11;noEdgeStyle=1;strokeColor=#6666FF;dashed=1;dashPattern=1 4;"}
+# connect: {"from": "calls", "to": "id", "style": "curved=1;fontSize=11;noEdgeStyle=1;strokeColor=#6666FF;dashed=0;dashPattern=1 4;"}
+## CSV data starts below this line
+## id,rparent,label, type, fill, override, refs
+id,rparent,label,type,fill,override,refs
+0,-,ReflectionToken,,#e0e0e0,,
+0_i0,0,IReflectionToken,mxgraph.bootstrap.rrect;strokeColor=none,#fff2cc;strokeColor=#d6b656;dashed=1,fontSize=6,
+0_i1,0,Ownable,mxgraph.bootstrap.rrect;strokeColor=none,#fff2cc;strokeColor=#d6b656;dashed=1,fontSize=6,
+0_f0,0,<b>__constr__<b>,text;strokeColor=none,none,,
+0_f1,0,🔍 name,text;strokeColor=none,none,,
+0_f2,0,🔍 symbol,text;strokeColor=none,none,,
+0_f3,0,🔍 decimals,text;strokeColor=none,none,,
+0_f4,0,🔍 totalSupply,text;strokeColor=none,none,,
+0_f5,0,🔍 balanceOf,text;strokeColor=none,none,,
+0_f6,0,transfer,text;strokeColor=none,none,,
+0_f7,0,🔍 allowance,text;strokeColor=none,none,,
+0_f8,0,approve,text;strokeColor=none,none,,
+0_f9,0,transferFrom,text;strokeColor=none,none,,
+0_f10,0,increaseAllowance,text;strokeColor=none,none,,
+0_f11,0,decreaseAllowance,text;strokeColor=none,none,,
+0_f12,0,migrate,text;strokeColor=none,none,,
+0_mod12_0,-,preventBlacklisted,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f12"
+0_f13,0,excludeFromReward,text;strokeColor=none,none,,
+0_mod13_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f13"
+0_f14,0,includeInReward,text;strokeColor=none,none,,
+0_mod14_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f14"
+0_f15,0,excludeFromFee,text;strokeColor=none,none,,
+0_mod15_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f15"
+0_f16,0,includeInFee,text;strokeColor=none,none,,
+0_mod16_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f16"
+0_f17,0,whitelistAddress,text;strokeColor=none,none,,
+0_mod17_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f17"
+0_mod17_1,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f17"
+0_mod17_2,-,preventBlacklisted,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f17"
+0_f18,0,excludeWhitelistedAddress,text;strokeColor=none,none,,
+0_mod18_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f18"
+0_f19,0,blacklistAddress,text;strokeColor=none,none,,
+0_mod19_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f19"
+0_f20,0,unBlacklistAddress,text;strokeColor=none,none,,
+0_mod20_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f20"
+0_f21,0,setEcoSystemFeePercent,text;strokeColor=none,none,,
+0_mod21_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f21"
+0_mod21_1,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f21"
+0_f22,0,setLiquidityFeePercent,text;strokeColor=none,none,,
+0_mod22_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f22"
+0_mod22_1,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f22"
+0_f23,0,setTaxFeePercent,text;strokeColor=none,none,,
+0_mod23_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f23"
+0_mod23_1,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f23"
+0_f24,0,setOwnerFeePercent,text;strokeColor=none,none,,
+0_mod24_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f24"
+0_mod24_1,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f24"
+0_f25,0,setBurnFeePercent,text;strokeColor=none,none,,
+0_mod25_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f25"
+0_mod25_1,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f25"
+0_f26,0,setEcoSystemFeeAddress,text;strokeColor=none,none,,
+0_mod26_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f26"
+0_mod26_1,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f26"
+0_f27,0,setOwnerFeeAddress,text;strokeColor=none,none,,
+0_mod27_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f27"
+0_mod27_1,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f27"
+0_f28,0,addTier,text;strokeColor=none,none,,
+0_mod28_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f28"
+0_f29,0,setMaxTxPercent,text;strokeColor=none,none,,
+0_mod29_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f29"
+0_f30,0,setDefaultSettings,text;strokeColor=none,none,,
+0_mod30_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f30"
+0_f31,0,setSwapAndEvolveEnabled,text;strokeColor=none,none,,
+0_mod31_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f31"
+0_f32,0,updateRouterAndPair,text;strokeColor=none,none,,
+0_mod32_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f32"
+0_f33,0,swapAndEvolve,text;strokeColor=none,none,,
+0_mod33_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f33"
+0_mod33_1,-,lockTheSwap,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f33"
+0_f34,0,setMigrationAddress,text;strokeColor=none,none,,
+0_mod34_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f34"
+0_f35,0,updateBurnAddress,text;strokeColor=none,none,,
+0_mod35_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f35"
+0_f36,0,setNumberOfTokenToCollectETH,text;strokeColor=none,none,,
+0_mod36_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f36"
+0_f37,0,setNumOfETHToSwapAndEvolve,text;strokeColor=none,none,,
+0_mod37_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f37"
+0_f38,0,withdrawToken,text;strokeColor=none,none,,
+0_mod38_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f38"
+0_f39,0,withdrawETH,text;strokeColor=none,none,,
+0_mod39_0,-,onlyOwner,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f39"
+0_f40,0,🔍 isExcludedFromReward,text;strokeColor=none,none,,
+0_f41,0,🔍 reflectionFromTokenInTiers,text;strokeColor=none,none,,
+0_f42,0,🔍 reflectionFromToken,text;strokeColor=none,none,,
+0_f43,0,🔍 tokenFromReflection,text;strokeColor=none,none,,
+0_f44,0,🔍 totalFees,text;strokeColor=none,none,,
+0_f45,0,🔍 accountTier,text;strokeColor=none,none,,
+0_f46,0,🔍 feeTier,text;strokeColor=none,none,,
+0_mod46_0,-,checkTierIndex,mxgraph.bootstrap.rrect,#fff2cc,strokeColor=#d79b00;dashed=1;align=center;rSize=10;fontStyle=0;whiteSpace=wrap;dashPattern=1 1;strokeColor=#d6b656;fontSize=8;fontFamily=Helvetica,"0_f46"
+0_f47,0,🔍 feeTiersLength,text;strokeColor=none,none,,
+0_f48,0,🔍 isExcludedFromFee,text;strokeColor=none,none,,
+0_f49,0,🔍 isWhitelisted,text;strokeColor=none,none,,
+0_f50,0,🔍 isBlacklisted,text;strokeColor=none,none,,
+0_f51,0,🔍 isMigrationStarted,text;strokeColor=none,none,,
+0_f52,0,🔍 getContractBalance,text;strokeColor=none,none,,
+0_f53,0,🔍 getETHBalance,text;strokeColor=none,none,,
+0_f54,0,💰 <b>__constr__<b>,text;strokeColor=none,none,,
